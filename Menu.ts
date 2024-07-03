@@ -1,9 +1,24 @@
 import rl = require("readline-sync");
 import { colors } from "./src/util/Colors";
+import { Conta } from "./src/model/Conta";
 
 export function main() {
     let loop: boolean = true;
     let opcao: number;
+
+    const c1: Conta = new Conta(1234, 111, 1, "Julia", 10012000.00);
+    const c2: Conta = new Conta(4123, 222, 2, "Everton", 10);
+
+    
+    c1.vizualizar();
+    c2.vizualizar();
+
+    c1.sacar(10400);
+    console.log(`\n\nSaldo da conta do(a) ${c1.titular}: ` + c1.saldo);
+    c2.sacar(20);
+
+    c2.depositar(100044300.123);
+    console.log(`Saldo da conta do(a) ${c2.titular}: ` + c2.saldo);
 
     console.log(colors.fg.green);
     console.log("*************************************************************");
