@@ -1,25 +1,36 @@
 import rl = require("readline-sync");
 import { colors } from "./src/util/Colors";
 import { Conta } from "./src/model/Conta";
+import { ContaCorrente } from "./src/model/ContaCorrente";
+import { ContaPoupanca } from "./src/model/ContaPoupanca";
 
 export function main() {
     let loop: boolean = true;
     let opcao: number;
 
-    const c1: Conta = new Conta(1234, 111, 1, "Julia", 10012000.00);
-    const c2: Conta = new Conta(4123, 222, 2, "Everton", 10);
+   // Objeto da Classe Conta (Teste)
+   const conta: Conta = new Conta(1, 123, 1, "Jorjinho", 123400);
+   conta.visualizar();
+   conta.sacar(10500);
+   conta.visualizar();
+   conta.depositar(5000);
+   conta.visualizar();
 
-    
-    c1.vizualizar();
-    c2.vizualizar();
+  // Objeto da Classe ContaCorrente (Teste)
+   const contacorrente: ContaCorrente = new ContaCorrente(2, 123, 1, "Robertinho", 15076, 1000);
+   contacorrente.visualizar();
+   contacorrente.sacar(2000);
+   contacorrente.visualizar();
+   contacorrente.depositar(1000);
+   contacorrente.visualizar();
 
-    c1.sacar(10400);
-    console.log(`\n\nSaldo da conta do(a) ${c1.titular}: ` + c1.saldo);
-    c2.sacar(20);
-
-    c2.depositar(100044300.123);
-    console.log(`Saldo da conta do(a) ${c2.titular}: ` + c2.saldo);
-
+   // Objeto da Classe ContaPoupanca (teste)
+   const contapoupanca: ContaPoupanca = new ContaPoupanca(3, 123, 2, "Vitinho", 1000, 10);
+   contapoupanca.visualizar();
+   contapoupanca.sacar(200);
+   contapoupanca.visualizar();
+   contapoupanca.depositar(1000);
+   contapoupanca.visualizar();
     console.log(colors.fg.green);
     console.log("*************************************************************");
     console.log("                                                             ");

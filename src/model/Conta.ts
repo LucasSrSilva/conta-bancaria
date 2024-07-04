@@ -67,7 +67,7 @@ export class Conta{
         this._saldo += valor;
     }
 
-    public vizualizar(): void{
+    public visualizar(): void{
         let tipo: string;
 
     switch(this._tipo){
@@ -91,5 +91,5 @@ export class Conta{
         console.log("Saldo: " + this._saldo.toFixed(2));
     }
     
-
+    
 }
