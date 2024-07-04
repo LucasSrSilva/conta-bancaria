@@ -31,6 +31,8 @@ export function main() {
    contapoupanca.visualizar();
    contapoupanca.depositar(1000);
    contapoupanca.visualizar();
+
+   
     console.log(colors.fg.green);
     console.log("*************************************************************");
     console.log("                                                             ");
