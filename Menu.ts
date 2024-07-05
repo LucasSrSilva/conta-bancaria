@@ -1,30 +1,22 @@
 import rl = require("readline-sync");
 import { colors } from "./src/util/Colors";
-import { Conta } from "./src/model/Conta";
 import { ContaCorrente } from "./src/model/ContaCorrente";
 import { ContaPoupanca } from "./src/model/ContaPoupanca";
+import { ContaController } from "./src/controller/ContaController";
 
 export function main() {
     let loop: boolean = true;
-    let opcao: number;
+    let opcao, numero: number;
 
-  // Objeto da Classe ContaCorrente (Teste)
-   const contacorrente: ContaCorrente = new ContaCorrente(2, 123, 1, "Robertinho", 15076, 1000);
-   contacorrente.visualizar();
-   contacorrente.sacar(2000);
-   contacorrente.visualizar();
-   contacorrente.depositar(1000);
-   contacorrente.visualizar();
 
-   // Objeto da Classe ContaPoupanca (teste)
-   const contapoupanca: ContaPoupanca = new ContaPoupanca(3, 123, 2, "Vitinho", 1000, 10);
-   contapoupanca.visualizar();
-   contapoupanca.sacar(200);
-   contapoupanca.visualizar();
-   contapoupanca.depositar(1000);
-   contapoupanca.visualizar();
+    const contas: ContaController = new ContaController();
 
-   
+
+    const cc1: ContaCorrente = new ContaCorrente(2, 123, 1, "Robertinho", 15076, 1000);
+    const cp1: ContaPoupanca = new ContaPoupanca(3, 123, 2, "Vitinho", 1000, 10);
+
+
+
     console.log(colors.fg.green);
     console.log("*************************************************************");
     console.log("                                                             ");
@@ -57,13 +49,17 @@ export function main() {
                 loop = false;
                 break;
             case 1:
-                console.log("\nCriar conta\n");
+                console.log(colors.fg.bluestrong, "\n*************************Criar Conta*************************\n", colors.reset);
+                criarConta(contas);
                 break;
             case 2:
-                console.log("\nListar todas as contas\n");
+                contas.listarTodas();
                 break;
             case 3:
-                console.log("Biscar Conta por numero");
+                console.log(colors.fg.bluestrong, "\n*************************Buscar Conta por numero*************************\n", colors.reset);
+                console.log("Digite o número da conta: ");
+                numero = rl.questionInt("");
+                contas.procurarPorNumero(numero);
                 break;
             case 4:
                 console.log("\nAtualizar conta\n");
@@ -96,6 +92,40 @@ export function sobre(): void {
     console.log("               lucasouzaribeiro12345@gmail.com                 ");
     console.log("               https://github.com/LucasSrSilva/                ");
     console.log("***************************************************************");
+}
+
+export function criarConta(contas: ContaController): void {
+    let agencia, tipo, saldo, limite, aniversario: number;
+    let titular: string;
+    const tipoContas = ["Conta Corrente", "Conta Poupanca"];
+
+    console.log("Digite o número da agência: ");
+    agencia = rl.questionInt("");
+    console.log("\nDigite o nome do Titular da conta: ");
+    titular = rl.question("");
+    console.log("\nSelecione o tipo de conta: ");
+    tipo = rl.keyInSelect(tipoContas, "", { cancel: false }) + 1;
+    console.log("\nDigite o saldo da conta: ");
+    saldo = rl.questionFloat("");
+
+    switch (tipo) {
+        case 1:
+            console.log("\nDigite o limite da conta: ");
+            limite = rl.questionFloat("");
+            contas.cadastrar(
+                new ContaCorrente(contas.gerarNumero(), agencia, tipo, titular, saldo, limite)
+            )
+            break;
+        case 2:
+            console.log("\nDigite o dia do aniversario da conta: ");
+            aniversario = rl.questionInt("");
+            contas.cadastrar(
+                new ContaCorrente(contas.gerarNumero(), agencia, tipo, titular, saldo, aniversario)
+            )
+            break;
+    }
+
+    console.log(colors.fg.bluestrong, "\n*************************Conta criada com sucesso!*************************\n\n", colors.reset)
 }
 
 main()
