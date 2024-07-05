@@ -67,6 +67,8 @@ export class Conta{
         this._saldo += valor;
     }
 
+
+    
     public visualizar(): void{
         let tipo: string;
 

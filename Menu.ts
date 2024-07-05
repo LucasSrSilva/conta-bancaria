@@ -8,14 +8,6 @@ export function main() {
     let loop: boolean = true;
     let opcao: number;
 
-   // Objeto da Classe Conta (Teste)
-   const conta: Conta = new Conta(1, 123, 1, "Jorjinho", 123400);
-   conta.visualizar();
-   conta.sacar(10500);
-   conta.visualizar();
-   conta.depositar(5000);
-   conta.visualizar();
-
   // Objeto da Classe ContaCorrente (Teste)
    const contacorrente: ContaCorrente = new ContaCorrente(2, 123, 1, "Robertinho", 15076, 1000);
    contacorrente.visualizar();
