@@ -50,13 +50,41 @@ export class ContaController implements ContaRepository {
         }
     }
     sacar(numero: number, valor: number): void {
-        throw new Error("Method not implemented.");
+        let buscaConta = this.buscarNoArray(numero);
+
+        if (buscaConta != null) {
+            if(buscaConta.sacar(valor) === true){
+                console.log(colors.fg.bluestrong ,"\n\nA Saque efetuado!!\n\n", colors.reset)
+            }
+        }
+        else {
+            console.log(`\n\nA conta não foi encontrada\n\n`)
+        }
     }
-    depositar(numero: number): void {
-        throw new Error("Method not implemented.");
+    depositar(numero: number, valor: number): void {
+        let buscaConta = this.buscarNoArray(numero);
+
+        if (buscaConta != null) {
+                buscaConta.depositar(valor);
+                console.log(colors.fg.bluestrong ,"\n\nA Deposito efetuado!!\n\n", colors.reset)    
+        }
+        else {
+            console.log(`\n\nA conta não foi encontrada\n\n`)
+        }
     }
     transferir(numeroOrigem: number, numeroDestino: number, valor: number): void {
-        throw new Error("Method not implemented.");
+        let buscaContaOrigem = this.buscarNoArray(numeroOrigem);
+        let buscaContaDestino = this.buscarNoArray(numeroDestino);
+
+        if (buscaContaOrigem != null && buscaContaDestino != null) {
+            if(buscaContaOrigem.sacar(valor) === true){
+                buscaContaDestino.depositar(valor);
+                console.log("\n\nTranferencia Executada com sucesso!!\n\n")
+            }
+        }
+        else{
+            console.log(`\n\nA conta não foi encontrada\n\n`)
+        }
     }
 
     public gerarNumero(): number {

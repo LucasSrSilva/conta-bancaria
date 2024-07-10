@@ -6,13 +6,13 @@ import { ContaController } from "./src/controller/ContaController";
 
 export function main() {
     let loop: boolean = true;
-    let opcao, numero: number;
+    let opcao, numero, valor: number;
 
 
     const contas: ContaController = new ContaController();
 
 
-    contas.cadastrar(new ContaCorrente(contas.gerarNumero(), 123, 1, "Robertinho", 15076, 1000));
+    contas.cadastrar(new ContaCorrente(contas.gerarNumero(), 123, 1, "Robertinho", 1000, 1000));
     contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), 123, 2, "Vitinho", 1000, 10));
 
 
@@ -66,12 +66,12 @@ export function main() {
                 let agencia, tipo, saldo, limite, aniversario: number;
                 let titular: string;
                 const tipoContas = ["Conta Corrente", "Conta Poupanca"];
-            
+
                 console.log("Digite o número da conta!")
                 numero = rl.questionInt("");
                 let conta = contas.buscarNoArray(numero);
 
-                if(conta == null){console.log("Conta não encontrada!\n"); return;};
+                if (conta == null) { console.log("Conta não encontrada!\n"); return; };
 
                 console.log("Digite o número da agência: ");
                 agencia = rl.questionInt("");
@@ -105,14 +105,32 @@ export function main() {
                 numero = rl.questionInt("");
                 contas.deletar(numero);
                 break;
-            case 6:
-                console.log("\nSacar\n");
+            case 6: //sacar
+                console.log(colors.fg.bluestrong, "\n*************************Sacar*************************\n", colors.reset);
+                console.log("Digite o número da conta: ");
+                numero = rl.questionInt("");
+                console.log("Digite o valor do saque: ");
+                valor = rl.questionFloat("");
+                contas.sacar(numero, valor);
                 break;
-            case 7:
-                console.log("\nDepositar\n");
+            case 7: //depositar
+                console.log(colors.fg.bluestrong, "\n*************************Depositar*************************\n", colors.reset);
+                console.log("Digite o número da conta: ");
+                numero = rl.questionInt("");
+                console.log("Digite o valor do deposito: ");
+                valor = rl.questionFloat("");
+                contas.depositar(numero, valor);
                 break;
-            case 8:
-                console.log("\nTrasferir\n");
+            case 8: //transferir
+                let numeroDestino: number;
+                console.log(colors.fg.bluestrong, "\n*************************Transferir*************************\n", colors.reset);
+                console.log("Digite o número da conta origem: ");
+                numero = rl.questionInt("");
+                console.log("Digite o número da conta destino: ");
+                numeroDestino = rl.questionInt("");
+                console.log("Digite o valor da transferência: ");
+                valor = rl.questionFloat("");
+                contas.transferir(numero, numeroDestino, valor);
                 break;
             default:
                 console.log("\nOpção inválida! Tente novamente\n");

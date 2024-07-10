@@ -8,7 +8,7 @@ export interface ContaRepository {
     deletar(numero: number): void;
 
     sacar(numero: number, valor: number): void;
-    depositar(numero: number): void;
+    depositar(numero: number, valor: number): void;
     transferir(numeroOrigem: number, numeroDestino: number, valor: number): void;
 }
 
