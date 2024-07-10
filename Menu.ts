@@ -12,8 +12,8 @@ export function main() {
     const contas: ContaController = new ContaController();
 
 
-    const cc1: ContaCorrente = new ContaCorrente(2, 123, 1, "Robertinho", 15076, 1000);
-    const cp1: ContaPoupanca = new ContaPoupanca(3, 123, 2, "Vitinho", 1000, 10);
+    contas.cadastrar(new ContaCorrente(contas.gerarNumero(), 123, 1, "Robertinho", 15076, 1000));
+    contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), 123, 2, "Vitinho", 1000, 10));
 
 
 
@@ -39,39 +39,74 @@ export function main() {
     console.log(colors.reset);
     while (loop) {
 
-        console.log(colors.fg.blue, "Entre com a opção desejada: ");
+        console.log(colors.fg.green, "\nEntre com a opção desejada: ");
         opcao = rl.questionInt("");
 
         switch (opcao) {
-            case 0:
+            case 0: //sair
                 console.log("Obrigado volte sempre! LuBank seu banco de sempre!");
                 sobre();
                 loop = false;
                 break;
-            case 1:
+            case 1: //Criar Conta
                 console.log(colors.fg.bluestrong, "\n*************************Criar Conta*************************\n", colors.reset);
                 criarConta(contas);
                 break;
-            case 2:
+            case 2: //listar Todas
                 contas.listarTodas();
                 break;
-            case 3:
+            case 3: //buscar
                 console.log(colors.fg.bluestrong, "\n*************************Buscar Conta por numero*************************\n", colors.reset);
                 console.log("Digite o número da conta: ");
                 numero = rl.questionInt("");
                 contas.procurarPorNumero(numero);
                 break;
-            case 4:
-                console.log("\nAtualizar conta\n");
+            case 4: //atualizar
+                console.log(colors.fg.bluestrong, "\n*************************Atualizar conta*************************\n", colors.reset);
+                let agencia, tipo, saldo, limite, aniversario: number;
+                let titular: string;
+                const tipoContas = ["Conta Corrente", "Conta Poupanca"];
+            
+                console.log("Digite o número da conta!")
+                numero = rl.questionInt("");
+                let conta = contas.buscarNoArray(numero);
+
+                if(conta == null){console.log("Conta não encontrada!\n"); return;};
+
+                console.log("Digite o número da agência: ");
+                agencia = rl.questionInt("");
+                console.log("\nDigite o nome do Titular da conta: ");
+                titular = rl.question("");
+                console.log("\nSelecione o tipo de conta: ");
+                tipo = rl.keyInSelect(tipoContas, "", { cancel: false }) + 1;
+                console.log("\nDigite o saldo da conta: ");
+                saldo = rl.questionFloat("");
+
+                switch (tipo) {
+                    case 1:
+                        console.log("\nDigite o limite da conta: ");
+                        limite = rl.questionFloat("");
+                        contas.atualizar(
+                            new ContaCorrente(numero, agencia, tipo, titular, saldo, limite)
+                        )
+                        break;
+                    case 2:
+                        console.log("\nDigite o dia do aniversario da conta: ");
+                        aniversario = rl.questionInt("");
+                        contas.atualizar(
+                            new ContaCorrente(numero, agencia, tipo, titular, saldo, aniversario)
+                        )
+                        break;
+                }
                 break;
-            case 5:
-                console.log("\nApagar conta\n");
+            case 5: //Deletar
+                console.log(colors.fg.bluestrong, "\n*************************Deletar Conta*************************\n", colors.reset);
+                console.log("Digite o número da conta: ");
+                numero = rl.questionInt("");
+                contas.deletar(numero);
                 break;
             case 6:
                 console.log("\nSacar\n");
-                break;
-            case 7:
-                console.log("\nDepositar\n");
                 break;
             case 7:
                 console.log("\nDepositar\n");
